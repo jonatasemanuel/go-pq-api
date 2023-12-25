@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -18,18 +17,19 @@ type App struct {
 }
 
 // func (a *App) Initialize(user, password, dbname string) {
-func (a *App) Initialize() error {
-	connectionString := fmt.Sprintf("user=postgres password=pass dbname=postgres sslmode=disable")
+// 	connectionString := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=enable", user, password, dbname)
+
+func (a *App) Initialize() {
+	connectionString := "user=postgres password=pass dbname=postgres sslmode=disable"
 
 	var err error
 	a.DB, err = sql.Open("postgres", connectionString)
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 
 	a.Router = mux.NewRouter()
 	a.initializeRoutes()
-	return nil
 }
 
 func (a *App) initializeRoutes() {
